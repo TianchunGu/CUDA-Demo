@@ -1,5 +1,8 @@
 #include <cuda_task/cuda_task.cuh>
 
+__constant__ float c_data;
+__constant__ float c_data2 = 6.6f;
+
 namespace cuda_task {
 __global__ void kernel_1(void) {
   printf("Constant data c_data = %.2f.\n", c_data);
