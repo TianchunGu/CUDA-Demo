@@ -1,51 +1,35 @@
-#include <iostream>
-#include <util/utils.cuh>  // 包含 util 库的头文件
+#include <program_main/program_main.cuh>
 
-__global__ void saxpy_kernel(float* y, float* x, float a) {
-  int i = blockIdx.x * blockDim.x + threadIdx.x;
-  if (i < N) {
-    y[i] = a * x[i] + y[i];
+__constant__ float c_data;
+__constant__ float c_data2 = 6.6f;
+
+__global__ void kernel_1(void) {
+  printf("Constant data c_data = %.2f.\n", c_data);
+}
+
+__global__ void kernel_2(int N) {
+  int idx = threadIdx.x;
+  if (idx < N) {
   }
 }
 
-int main() {
-  float h_x[N], h_y[N];
-  for (int i = 0; i < N; ++i) {
-    h_x[i] = static_cast<float>(i);
-    h_y[i] = static_cast<float>(i * 2);
-  }
+int main(int argc, char** argv) {
+  int devID = 0;
+  cudaDeviceProp deviceProps;
+  util::CUDA_CHECK(cudaGetDeviceProperties(&deviceProps, devID));
+  std::cout << "运行GPU设备:" << deviceProps.name << std::endl;
 
-  float *d_x, *d_y;
+  float h_data = 8.8f;
+  util::CUDA_CHECK(cudaMemcpyToSymbol(c_data, &h_data, sizeof(float)));
 
-  // 分配设备内存，并使用宏进行错误检查
-  CUDA_CHECK(cudaMalloc(&d_x, N * sizeof(float)));
-  CUDA_CHECK(cudaMalloc(&d_y, N * sizeof(float)));
+  dim3 block(1);
+  dim3 grid(1);
+  kernel_1<<<grid, block>>>();
+  util::CUDA_CHECK(cudaDeviceSynchronize());
+  util::CUDA_CHECK(cudaMemcpyFromSymbol(&h_data, c_data2, sizeof(float)));
+  printf("Constant data h_data = %.2f.\n", h_data);
 
-  // 将数据从主机复制到设备
-  CUDA_CHECK(cudaMemcpy(d_x, h_x, N * sizeof(float), cudaMemcpyHostToDevice));
-  CUDA_CHECK(cudaMemcpy(d_y, h_y, N * sizeof(float), cudaMemcpyHostToDevice));
-
-  int threads = 256;
-  int blocks = (N + threads - 1) / threads;
-
-  // 执行内核
-  saxpy_kernel<<<blocks, threads>>>(d_y, d_x, 2.0f);
-  // 检查内核执行是否出错
-  KERNEL_CHECK();
-
-  // 将结果从设备复制回主机
-  CUDA_CHECK(cudaMemcpy(h_y, d_y, N * sizeof(float), cudaMemcpyDeviceToHost));
-
-  // 打印部分结果以验证
-  for (int i = 0; i < 10; ++i) {
-    std::cout << "h_y[" << i << "] = " << h_y[i] << std::endl;
-  }
-
-  // 释放设备内存
-  CUDA_CHECK(cudaFree(d_x));
-  CUDA_CHECK(cudaFree(d_y));
-
-  std::cout << "Program finished successfully." << std::endl;
+  util::CUDA_CHECK(cudaDeviceReset());
 
   return 0;
 }
