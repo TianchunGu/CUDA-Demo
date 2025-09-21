@@ -22,7 +22,7 @@ endif()
 
 # 添加子目录
 add_subdirectory(util)
-add_subdirectory(program_main)
+add_subdirectory(cuda_task)
 
 # 添加新的可执行文件目标
 add_executable(main_app app/main.cpp)
