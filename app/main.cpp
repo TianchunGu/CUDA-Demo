@@ -1,6 +1,5 @@
-
-__constant__ float c_data;
-__constant__ float c_data2 = 6.6f;
+#include <cuda_task/cuda_task.cuh>
+#include <iostream>
 
 int main(int argc, char** argv) {
   std::cout << "Starting CUDA vector add task from main()..." << std::endl;
