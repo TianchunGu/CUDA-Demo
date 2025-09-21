@@ -5,7 +5,9 @@
 #define LAST_KERNEL_CHECK(call) __kernelCheck(__FILE__, __LINE__)
 
 namespace util {
-static void __cudaCheck(cudaError_t err, const char* file, const int line);
 
-static void __kernelCheck(const char* file, const int line);
+void __cudaCheck(cudaError_t err, const char* file, const int line);
+
+void __kernelCheck(const char* file, const int line);
+
 }  // namespace util
