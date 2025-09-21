@@ -20,7 +20,13 @@ else()
 message(FATAL_ERROR "Cannot find CUDA")
 endif()
 
-
+# 添加子目录
 add_subdirectory(util)
-
 add_subdirectory(program_main)
+
+# 添加新的可执行文件目标
+add_executable(main_app app/main.cpp)
+
+# 将可执行文件链接到我们的 CUDA 任务库
+# 由于 cuda_task 链接了 util, 链接属性会自动传递过来
+target_link_libraries(main_app PRIVATE cuda_task)

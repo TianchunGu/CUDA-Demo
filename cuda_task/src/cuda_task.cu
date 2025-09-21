@@ -1,8 +1,6 @@
-#include <program_main/program_main.cuh>
+#include <cuda_task/cuda_task.cuh>
 
-__constant__ float c_data;
-__constant__ float c_data2 = 6.6f;
-
+namespace cuda_task {
 __global__ void kernel_1(void) {
   printf("Constant data c_data = %.2f.\n", c_data);
 }
@@ -13,7 +11,7 @@ __global__ void kernel_2(int N) {
   }
 }
 
-int main(int argc, char** argv) {
+void run_vector_add() {
   int devID = 0;
   cudaDeviceProp deviceProps;
   util::CUDA_CHECK(cudaGetDeviceProperties(&deviceProps, devID));
@@ -30,6 +28,6 @@ int main(int argc, char** argv) {
   printf("Constant data h_data = %.2f.\n", h_data);
 
   util::CUDA_CHECK(cudaDeviceReset());
-
-  return 0;
 }
+
+}  // namespace cuda_task
