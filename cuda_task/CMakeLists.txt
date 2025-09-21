@@ -1,21 +1,30 @@
-
-# 搜集源文件，同时包含 .cu 和 .cuh
-file(GLOB_RECURSE srcs CONFIGURE_DEPENDS src/*.cu include/*.cuh)
-
-# 定义可执行文件的目标名
-set(TARGET_NAME cuda_task)
-
-# 创建静态库
-add_library(cuda_task STATIC ${srcs}) 
-
-
-# 保留原有的头文件路径配置
-target_include_directories(${TARGET_NAME} 
-    PUBLIC 
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
+# 明确列出源文件，更健壮
+set(CUDA_TASK_SOURCES
+    src/cuda_task.cu
+)
+set(CUDA_TASK_HEADERS
+    include/cuda_task/cuda_task.cuh
 )
 
+# 创建静态库
+add_library(cuda_task STATIC 
+    ${CUDA_TASK_SOURCES}
+    ${CUDA_TASK_HEADERS}
+) 
 
-# 链接 util 库，PUBLIC/PRIVATE 都可以，这里用 PRIVATE
-# CMake 会自动处理好 util 头文件的包含问题
-target_link_libraries(${TARGET_NAME} PUBLIC util  ${CUDA_LIBRARIES})
+# 指定头文件搜索路径
+# PUBLIC: 链接到 cuda_task 的目标也会自动包含这个路径
+target_include_directories(cuda_task 
+    PUBLIC 
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include> # 为未来的安装做准备
+)
+
+# 链接依赖库
+# PUBLIC: 确保链接到 cuda_task 的目标也能访问 util 的头文件
+# CUDA::toolkit: 现代的 CUDA 链接方式
+target_link_libraries(cuda_task 
+    PUBLIC 
+        util
+        CUDA::cudart
+)
