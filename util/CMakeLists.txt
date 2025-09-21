@@ -1,6 +1,6 @@
 
 # 搜集源文件
-file(GLOB_RECURSE srcs CONFIGURE_DEPENDS src/*.cu)
+file(GLOB_RECURSE srcs CONFIGURE_DEPENDS src/*.cu include/*.cuh)
 
 # 定义库的目标名
 set(TARGET_NAME util)

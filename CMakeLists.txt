@@ -1,7 +1,7 @@
 # 最低版本要求
 cmake_minimum_required(VERSION 3.20)
 # 项目信息
-project(main_program LANGUAGES CXX CUDA)
+project(main_app LANGUAGES CXX CUDA)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CUDA_STANDARD 14) # 用于指定CUDA编译器应该使用的CUDA C++标准的版本

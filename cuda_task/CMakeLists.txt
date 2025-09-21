@@ -1,6 +1,6 @@
 
 # 搜集源文件，同时包含 .cu 和 .cuh
-file(GLOB_RECURSE srcs CONFIGURE_DEPENDS "src/*.cu" "include/*.cuh")
+file(GLOB_RECURSE srcs CONFIGURE_DEPENDS src/*.cu include/*.cuh)
 
 # 定义可执行文件的目标名
 set(TARGET_NAME program_main)
