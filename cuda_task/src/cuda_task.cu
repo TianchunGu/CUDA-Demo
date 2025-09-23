@@ -39,10 +39,7 @@ void run_vector_add() {
 
 /**
  * @brief 执行一次完整的cuFFT变换流程
- *
  * 该函数封装了内存分配、创建计划、执行变换和资源清理的完整三步流程。
- * [cite_start]这个函数的设计基于文档中的示例代码 [cite: 76, 77, 78, 81, 82, 83,
- * 84, 85, 86]。
  */
 void perform_cufft_transform() {
   cufftHandle plan;
