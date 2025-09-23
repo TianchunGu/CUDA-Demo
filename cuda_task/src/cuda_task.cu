@@ -50,24 +50,20 @@ void perform_cufft_transform() {
 
   std::cout << "Allocating GPU memory for " << BATCH << " transforms of size "
             << NX << "..." << std::endl;
-  [cite_start]  // 分配GPU内存 [cite: 83]
-      util::CUDA_CHECK(
-          cudaMalloc((void**)&data, sizeof(cufftComplex) * NX * BATCH));
+  util::CUDA_CHECK(
+      cudaMalloc((void**)&data, sizeof(cufftComplex) * NX * BATCH));
 
   std::cout << "Creating cuFFT plan..." << std::endl;
-  [cite_start]  // 创建一个一维的C2C变换计划 [cite: 805, 814]
-      util::CUDA_CHECK(cufftPlan1d(&plan, NX, CUFFT_C2C, BATCH));
+  util::CUDA_CHECK(cufftPlan1d(&plan, NX, CUFFT_C2C, BATCH));
 
   std::cout << "Executing cuFFT plan..." << std::endl;
-  [cite_start]  // 执行计划 [cite: 1591, 1594]
-      util::CUDA_CHECK(cufftExecC2C(plan, data, data, CUFFT_FORWARD));
+  util::CUDA_CHECK(cufftExecC2C(plan, data, data, CUFFT_FORWARD));
 
   std::cout << "Waiting for GPU to finish..." << std::endl;
   util::CUDA_CHECK(cudaDeviceSynchronize());
 
   std::cout << "Destroying cuFFT plan and freeing memory..." << std::endl;
-  [cite_start]  // 销毁计划并释放相关资源 [cite: 941, 942]
-      util::CUDA_CHECK(cufftDestroy(plan));
+  util::CUDA_CHECK(cufftDestroy(plan));
   util::CUDA_CHECK(cudaFree(data));  // 释放GPU内存
 }
 

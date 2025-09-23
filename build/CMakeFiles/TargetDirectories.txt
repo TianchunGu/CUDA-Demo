@@ -1,9 +1,0 @@
-/home/gtc/Projects/CUDA-Demo/build/CMakeFiles/main_app.dir
-/home/gtc/Projects/CUDA-Demo/build/CMakeFiles/edit_cache.dir
-/home/gtc/Projects/CUDA-Demo/build/CMakeFiles/rebuild_cache.dir
-/home/gtc/Projects/CUDA-Demo/build/util/CMakeFiles/util.dir
-/home/gtc/Projects/CUDA-Demo/build/util/CMakeFiles/edit_cache.dir
-/home/gtc/Projects/CUDA-Demo/build/util/CMakeFiles/rebuild_cache.dir
-/home/gtc/Projects/CUDA-Demo/build/cuda_task/CMakeFiles/cuda_task.dir
-/home/gtc/Projects/CUDA-Demo/build/cuda_task/CMakeFiles/edit_cache.dir
-/home/gtc/Projects/CUDA-Demo/build/cuda_task/CMakeFiles/rebuild_cache.dir
