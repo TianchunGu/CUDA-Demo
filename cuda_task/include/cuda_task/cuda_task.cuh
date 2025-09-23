@@ -1,6 +1,6 @@
 #pragma once
-#include <cuda_runtime.h>
-#include <cufft.h>
+#include <cuda_runtime.h>  // 包含 cuda_runtime.h 以便使用 cudaGetErrorString
+#include <cufft.h>         // 包含 cufft.h 以便使用 cufftResult
 #include <iostream>
 #include <util/utils.cuh>
 
