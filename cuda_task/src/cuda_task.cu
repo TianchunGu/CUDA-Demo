@@ -54,16 +54,16 @@ void perform_cufft_transform() {
       cudaMalloc((void**)&data, sizeof(cufftComplex) * NX * BATCH));
 
   std::cout << "Creating cuFFT plan..." << std::endl;
-  util::LAST_KERNEL_CHECK(cufftPlan1d(&plan, NX, CUFFT_C2C, BATCH));
+  util::CUFFT_CHECK(cufftPlan1d(&plan, NX, CUFFT_C2C, BATCH));
 
   std::cout << "Executing cuFFT plan..." << std::endl;
-  util::LAST_KERNEL_CHECK(cufftExecC2C(plan, data, data, CUFFT_FORWARD));
+  util::CUFFT_CHECK(cufftExecC2C(plan, data, data, CUFFT_FORWARD));
 
   std::cout << "Waiting for GPU to finish..." << std::endl;
   util::CUDA_CHECK(cudaDeviceSynchronize());
 
   std::cout << "Destroying cuFFT plan and freeing memory..." << std::endl;
-  util::LAST_KERNEL_CHECK(cufftDestroy(plan));
+  util::CUFFT_CHECK(cufftDestroy(plan));
   util::CUDA_CHECK(cudaFree(data));  // 释放GPU内存
 }
 
