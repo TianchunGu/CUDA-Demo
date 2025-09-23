@@ -1,5 +1,6 @@
 #pragma once
 #include <cuda_runtime.h>
+#include <cufft.h>
 #include <iostream>
 #include <util/utils.cuh>
 
@@ -7,6 +8,8 @@ namespace cuda_task {
 __global__ void kernel_1(void);
 
 __global__ void kernel_2(int N);
+
+void perform_cufft_transform();
 
 void run_vector_add();
 

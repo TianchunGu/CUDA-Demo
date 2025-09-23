@@ -1,0 +1,17 @@
+[
+{
+  "directory": "/home/gtc/Projects/CUDA-Demo/build",
+  "command": "/usr/bin/c++  -I/home/gtc/Projects/CUDA-Demo/cuda_task/include -I/home/gtc/Projects/CUDA-Demo/util/include -isystem /usr/local/cuda-11.6/include -std=gnu++14 -o CMakeFiles/main_app.dir/app/main.cpp.o -c /home/gtc/Projects/CUDA-Demo/app/main.cpp",
+  "file": "/home/gtc/Projects/CUDA-Demo/app/main.cpp"
+},
+{
+  "directory": "/home/gtc/Projects/CUDA-Demo/build/util",
+  "command": "/usr/local/cuda-11.6/bin/nvcc -forward-unknown-to-host-compiler  -I/home/gtc/Projects/CUDA-Demo/util/include  --generate-code=arch=compute_52,code=[compute_52,sm_52] -std=c++14 -x cu -c /home/gtc/Projects/CUDA-Demo/util/src/utils.cu -o CMakeFiles/util.dir/src/utils.cu.o",
+  "file": "/home/gtc/Projects/CUDA-Demo/util/src/utils.cu"
+},
+{
+  "directory": "/home/gtc/Projects/CUDA-Demo/build/cuda_task",
+  "command": "/usr/local/cuda-11.6/bin/nvcc -forward-unknown-to-host-compiler  -I/home/gtc/Projects/CUDA-Demo/cuda_task/include -I/home/gtc/Projects/CUDA-Demo/util/include -isystem=/usr/local/cuda-11.6/include  --generate-code=arch=compute_52,code=[compute_52,sm_52] -std=c++14 -x cu -c /home/gtc/Projects/CUDA-Demo/cuda_task/src/cuda_task.cu -o CMakeFiles/cuda_task.dir/src/cuda_task.cu.o",
+  "file": "/home/gtc/Projects/CUDA-Demo/cuda_task/src/cuda_task.cu"
+}
+]

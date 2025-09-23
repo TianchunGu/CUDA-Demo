@@ -26,5 +26,6 @@ target_include_directories(cuda_task
 target_link_libraries(cuda_task 
     PUBLIC 
         util
-        CUDA::cudart
+        CUDA::cudart  #链接 CUDA 运行时库 (CUDA Runtime Library) 
+        CUDA::cufft   #添加 cuFFT 库链接
 )

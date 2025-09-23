@@ -1,0 +1,2 @@
+/usr/bin/ar qc libcuda_task.a CMakeFiles/cuda_task.dir/src/cuda_task.cu.o
+/usr/bin/ranlib libcuda_task.a

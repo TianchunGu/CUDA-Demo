@@ -1,5 +1,9 @@
 #include <cuda_task/cuda_task.cuh>
 
+// 宏定义变换的尺寸和批次数
+#define NX 256
+#define BATCH 10
+
 __constant__ float c_data;
 __constant__ float c_data2 = 6.6f;
 
@@ -31,6 +35,40 @@ void run_vector_add() {
   printf("Constant data h_data = %.2f.\n", h_data);
 
   util::CUDA_CHECK(cudaDeviceReset());
+}
+
+/**
+ * @brief 执行一次完整的cuFFT变换流程
+ *
+ * 该函数封装了内存分配、创建计划、执行变换和资源清理的完整三步流程。
+ * [cite_start]这个函数的设计基于文档中的示例代码 [cite: 76, 77, 78, 81, 82, 83,
+ * 84, 85, 86]。
+ */
+void perform_cufft_transform() {
+  cufftHandle plan;
+  cufftComplex* data;
+
+  std::cout << "Allocating GPU memory for " << BATCH << " transforms of size "
+            << NX << "..." << std::endl;
+  [cite_start]  // 分配GPU内存 [cite: 83]
+      util::CUDA_CHECK(
+          cudaMalloc((void**)&data, sizeof(cufftComplex) * NX * BATCH));
+
+  std::cout << "Creating cuFFT plan..." << std::endl;
+  [cite_start]  // 创建一个一维的C2C变换计划 [cite: 805, 814]
+      util::CUDA_CHECK(cufftPlan1d(&plan, NX, CUFFT_C2C, BATCH));
+
+  std::cout << "Executing cuFFT plan..." << std::endl;
+  [cite_start]  // 执行计划 [cite: 1591, 1594]
+      util::CUDA_CHECK(cufftExecC2C(plan, data, data, CUFFT_FORWARD));
+
+  std::cout << "Waiting for GPU to finish..." << std::endl;
+  util::CUDA_CHECK(cudaDeviceSynchronize());
+
+  std::cout << "Destroying cuFFT plan and freeing memory..." << std::endl;
+  [cite_start]  // 销毁计划并释放相关资源 [cite: 941, 942]
+      util::CUDA_CHECK(cufftDestroy(plan));
+  util::CUDA_CHECK(cudaFree(data));  // 释放GPU内存
 }
 
 }  // namespace cuda_task

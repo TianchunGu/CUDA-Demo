@@ -9,5 +9,7 @@ int main(int argc, char** argv) {
 
   std::cout << "CUDA task finished." << std::endl;
 
+  perform_cufft_transform();
+
   return 0;
 }
